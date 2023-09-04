@@ -25,9 +25,9 @@ var (
 	us    services.Service
 	uc    controllers.Controller
 	userc *mongo.Collection
-	teamc *mongo.Collection
-	solc  *mongo.Collection
-	quec  *mongo.Collection
+	// teamc *mongo.Collection
+	// solc  *mongo.Collection
+	// quec  *mongo.Collection
 
 	rs routes.RouterService
 
@@ -56,12 +56,12 @@ func InitializeSetup() {
 
 	fmt.Println("mongo connection established")
 
-	teamc = mongoclient.Database("cryptic-golang").Collection("teams")
-	userc = mongoclient.Database("cryptic-golang").Collection("users")
-	solc = mongoclient.Database("cryptic-golang").Collection("solutions")
-	quec = mongoclient.Database("cryptic-golang").Collection("questions")
+	// teamc = mongoclient.Database("Society-Synergy").Collection("teams")
+	userc = mongoclient.Database("Society-Synergy").Collection("users")
+	// solc = mongoclient.Database("Society-Synergy").Collection("solutions")
+	// quec = mongoclient.Database("Society-Synergy").Collection("questions")
 
-	us = services.NewService(solc, userc, teamc, quec, ctx)
+	us = services.NewService(userc, ctx)
 	uc = controllers.New(us)
 
 	rs = routes.NewRouterService(uc)
