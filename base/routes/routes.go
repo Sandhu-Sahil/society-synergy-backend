@@ -15,6 +15,10 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 			userSimpleGroup.POST("/login", rs.Controller.Login)
 			userSimpleGroup.POST("/register", rs.Controller.Register)
 		}
+		testGroup := simpleGroup.Group("/test")
+		{
+			testGroup.GET("/ping", rs.Controller.Ping)
+		}
 	}
 
 	jwtGroup := rg.Group("v2") //with jwt headers
