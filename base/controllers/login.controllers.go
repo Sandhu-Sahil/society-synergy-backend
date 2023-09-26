@@ -37,11 +37,11 @@ func (uc *Controller) Register(ctx *gin.Context) {
 		return
 	}
 	if user.Email == "" {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": errors.New("must provide all fields")})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": errors.New("must provide all fields, email is missing")})
 		return
 	}
 
-	user.Role = "MEMBER"
+	user.Role = "STUDENT"
 	valid := services.IsPasswordValid(user.Password)
 	if !valid {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Password", "message": "Password must contain UPPER CASE, LOWER CASE, SPECIAL CHARACTER, NUMBER and LENGTH>7"})

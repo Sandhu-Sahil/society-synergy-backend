@@ -57,7 +57,7 @@ func (u *ServiceImpl) RegisterUser(user *models.User) (string, error) {
 
 func (u *ServiceImpl) LoginUser(user *models.Login) (string, error) {
 	var userFound *models.User
-	query := bson.D{bson.E{Key: "user_name", Value: user.UserName}}
+	query := bson.D{bson.E{Key: "userName", Value: user.UserName}}
 	err := u.usercollection.FindOne(u.ctx, query).Decode(&userFound)
 	if err != nil {
 		return "", err
