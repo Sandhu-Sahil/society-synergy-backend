@@ -22,10 +22,14 @@ import (
 var (
 	server *gin.Engine
 
-	us    services.Service
-	uc    controllers.Controller
+	us services.ServiceUser
+	ls services.ServiceLogs
+
+	uc controllers.UserController
+	lc controllers.LogsController
+
 	userc *mongo.Collection
-	// teamc *mongo.Collection
+	logc  *mongo.Collection
 	// solc  *mongo.Collection
 	// quec  *mongo.Collection
 
@@ -56,15 +60,18 @@ func InitializeSetup() {
 
 	fmt.Println("mongo connection established")
 
-	// teamc = mongoclient.Database("Society-Synergy").Collection("teams")
+	logc = mongoclient.Database("Society-Synergy").Collection("auditlogs")
 	userc = mongoclient.Database("Society-Synergy").Collection("users")
 	// solc = mongoclient.Database("Society-Synergy").Collection("solutions")
 	// quec = mongoclient.Database("Society-Synergy").Collection("questions")
 
-	us = services.NewService(userc, ctx)
-	uc = controllers.New(us)
+	us = services.NewServiceUser(userc, ctx)
+	ls = services.NewServiceLogs(logc, ctx)
 
-	rs = routes.NewRouterService(uc)
+	uc = controllers.NewUserController(us)
+	lc = controllers.NewLogsController(ls)
+
+	rs = routes.NewRouterService(uc, lc)
 
 	server = gin.Default()
 	// server.Use(cors.New(cors.Config{

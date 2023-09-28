@@ -3,11 +3,13 @@ package routes
 import "Society-Synergy/base/controllers"
 
 type RouterService struct {
-	Controller controllers.Controller
+	UserController controllers.UserController
+	LogsController controllers.LogsController
 }
 
-func NewRouterService(Controller controllers.Controller) RouterService {
+func NewRouterService(UserController controllers.UserController, LogsController controllers.LogsController) RouterService {
 	return RouterService{
-		Controller: Controller,
+		UserController: UserController,
+		LogsController: LogsController,
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (u *ServiceImpl) GetUserByID(id string) (*models.User, error) {
+func (u *ServiceUserImpl) GetUserByID(id string) (*models.User, error) {
 	objectid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return &models.User{}, err

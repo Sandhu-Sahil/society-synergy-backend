@@ -2,12 +2,22 @@ package controllers
 
 import "Society-Synergy/base/services"
 
-type Controller struct {
-	UserService services.Service
+type UserController struct {
+	UserService services.ServiceUser
 }
 
-func New(userservice services.Service) Controller {
-	return Controller{
+type LogsController struct {
+	LogsService services.ServiceLogs
+}
+
+func NewUserController(userservice services.ServiceUser) UserController {
+	return UserController{
 		UserService: userservice,
+	}
+}
+
+func NewLogsController(logsservice services.ServiceLogs) LogsController {
+	return LogsController{
+		LogsService: logsservice,
 	}
 }

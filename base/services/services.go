@@ -4,8 +4,13 @@ import (
 	"Society-Synergy/base/models"
 )
 
-type Service interface {
+type ServiceUser interface {
 	LoginUser(*models.Login) (string, error)
-	RegisterUser(*models.User) (string, error)
+	RegisterUser(*models.User) (string, models.AuditLogs, error)
 	GetUserByID(string) (*models.User, error)
+}
+
+type ServiceLogs interface {
+	GetLog(*models.AuditLogs) (string, error)
+	RegisterLog(*models.AuditLogs) (string, error)
 }

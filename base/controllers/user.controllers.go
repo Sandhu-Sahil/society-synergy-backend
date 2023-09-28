@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (uc *Controller) GetUser(ctx *gin.Context) {
+func (uc *UserController) GetUser(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	user_id, _, err := token.ExtractTokenID(ctx)

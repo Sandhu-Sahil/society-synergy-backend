@@ -12,12 +12,12 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 	{
 		userSimpleGroup := simpleGroup.Group("/user")
 		{
-			userSimpleGroup.POST("/login", rs.Controller.Login)
-			userSimpleGroup.POST("/register", rs.Controller.Register)
+			userSimpleGroup.POST("/login", rs.UserController.Login)
+			userSimpleGroup.POST("/register", rs.UserController.Register, rs.LogsController.RegisterLog)
 		}
 		testGroup := simpleGroup.Group("/test")
 		{
-			testGroup.GET("/ping", rs.Controller.Ping)
+			testGroup.GET("/ping", rs.UserController.Ping)
 		}
 	}
 
@@ -27,7 +27,7 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 
 		userGroup := jwtGroup.Group("/user")
 		{
-			userGroup.GET("/:id", rs.Controller.GetUser)
+			userGroup.GET("/:id", rs.UserController.GetUser)
 		}
 
 		// teamGroup := jwtGroup.Group("/team")

@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"strings"
+	"time"
 
 	"Society-Synergy/base/models"
 	"Society-Synergy/base/token"
@@ -12,29 +13,29 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (u *ServiceImpl) RegisterUser(user *models.User) (string, error) {
-	query := bson.D{bson.E{Key: "user_name", Value: user.UserName}}
+func (u *ServiceUserImpl) RegisterUser(user *models.User) (string, models.AuditLogs, error) {
+	query := bson.D{bson.E{Key: "userName", Value: user.UserName}}
 	res, err := u.usercollection.Find(u.ctx, query)
 	if err != nil {
-		return "", err
+		return "", models.AuditLogs{}, err
 	}
 	// fmt.Print(res.RemainingBatchLength())
 	if res.RemainingBatchLength() != 0 {
-		return "", errors.New("user already existed (user name already registered)")
+		return "", models.AuditLogs{}, errors.New("user already existed (user name already registered)")
 	}
 	query = bson.D{bson.E{Key: "email", Value: user.Email}}
 	res, err = u.usercollection.Find(u.ctx, query)
 	if err != nil {
-		return "", err
+		return "", models.AuditLogs{}, err
 	}
 	// fmt.Print(res.RemainingBatchLength())
 	if res.RemainingBatchLength() != 0 {
-		return "", errors.New("user already existed (email already registered)")
+		return "", models.AuditLogs{}, errors.New("user already existed (email already registered)")
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return "", err
+		return "", models.AuditLogs{}, err
 	}
 	user.Password = string(hashedPassword)
 
@@ -43,19 +44,27 @@ func (u *ServiceImpl) RegisterUser(user *models.User) (string, error) {
 
 	userCreated, err := u.usercollection.InsertOne(u.ctx, user)
 	if err != nil {
-		return "", err
+		return "", models.AuditLogs{}, err
 	}
 	id := userCreated.InsertedID.(primitive.ObjectID).Hex()
 
 	token, err := token.GenerateToken(id, user.UserName, user.Role)
 	if err != nil {
-		return "", err
+		return "", models.AuditLogs{}, err
 	}
 
-	return token, nil
+	log := models.AuditLogs{
+		User:           *user,
+		ActionType:     "CREATE",
+		Operation:      "Created a new user by the name " + user.UserName + " with email " + user.Email + " and role " + user.Role + ".",
+		Timestamp:      time.Now().UTC().Add(time.Hour * 5).Add(time.Minute * 30),
+		DocumentedByID: id,
+	}
+
+	return token, log, nil
 }
 
-func (u *ServiceImpl) LoginUser(user *models.Login) (string, error) {
+func (u *ServiceUserImpl) LoginUser(user *models.Login) (string, error) {
 	var userFound *models.User
 	query := bson.D{bson.E{Key: "userName", Value: user.UserName}}
 	err := u.usercollection.FindOne(u.ctx, query).Decode(&userFound)

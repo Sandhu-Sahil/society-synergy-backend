@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -14,7 +16,7 @@ type User struct {
 	UserName string             `json:"userName" bson:"userName" binding:"required,alphanum"`
 	Email    string             `json:"email" bson:"email" binding:"required,email"`
 	Password string             `json:"password" bson:"password" binding:"required"`
-	Role     string             `json:"role" bson:"role"`
+	Role     string             `json:"role" bson:"role"` // student, head, admin
 	// CountryCode string             `json:"countryCode" bson:"countryCode" binding:"required,iso3166_1_alpha2"`
 	PhoneNo   string `json:"phoneNo" bson:"phoneNo" binding:"required,e164,min=13,max=13"`
 	FirstName string `json:"firstName" bson:"firstName" binding:"required"`
@@ -76,5 +78,13 @@ type Email struct {
 }
 
 type AuditLogs struct {
-	// baad ch karange
+	ID             primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	User           User               `json:"user" bson:"user" binding:"required"`
+	ActionType     string             `json:"actionType" bson:"actionType" binding:"required"` // delete, update, create
+	Operation      string             `json:"operation" bson:"operation" binding:"required"`
+	Timestamp      time.Time          `json:"timestamp" bson:"timestamp" binding:"required"`
+	DocumentedByID string             `json:"documentID" bson:"documentID" binding:"required"`
+	BeforeEdit     interface{}        `json:"beforeEdit" bson:"beforeEdit"`
+	AfterEdit      interface{}        `json:"afterEdit" bson:"afterEdit"`
+	// Changes        string             `json:"changes" bson:"changes" binding:"required"`
 }
