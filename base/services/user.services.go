@@ -21,5 +21,6 @@ func (u *ServiceUserImpl) GetUserByID(id string) (*models.User, error) {
 	}
 
 	userFound.Password = "**PROTECTED**"
+	userFound.OTP = "**PROTECTED**"
 	return userFound, nil
 }

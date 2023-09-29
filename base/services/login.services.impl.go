@@ -41,6 +41,9 @@ func (u *ServiceUserImpl) RegisterUser(user *models.User) (string, models.AuditL
 
 	//remove spaces in username
 	user.UserName = strings.TrimSpace(user.UserName)
+	user.OTP = ""
+	user.OTPExpiry = time.Now().UTC().Add(time.Hour * 5).Add(time.Minute * 30)
+	user.Varified = false
 
 	userCreated, err := u.usercollection.InsertOne(u.ctx, user)
 	if err != nil {

@@ -12,15 +12,17 @@ type Login struct {
 }
 
 type User struct {
-	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	UserName string             `json:"userName" bson:"userName" binding:"required,alphanum"`
-	Email    string             `json:"email" bson:"email" binding:"required,email"`
-	Password string             `json:"password" bson:"password" binding:"required"`
-	Role     string             `json:"role" bson:"role"` // student, head, admin
-	// CountryCode string             `json:"countryCode" bson:"countryCode" binding:"required,iso3166_1_alpha2"`
-	PhoneNo   string `json:"phoneNo" bson:"phoneNo" binding:"required,e164,min=13,max=13"`
-	FirstName string `json:"firstName" bson:"firstName" binding:"required"`
-	LastName  string `json:"lastName" bson:"lastName" binding:"required"`
+	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	UserName  string             `json:"userName" bson:"userName" binding:"required,alphanum"`
+	Email     string             `json:"email" bson:"email" binding:"required,email"`
+	Password  string             `json:"password" bson:"password" binding:"required"`
+	Role      string             `json:"role" bson:"role"` // student, head, admin
+	PhoneNo   string             `json:"phoneNo" bson:"phoneNo" binding:"required,e164,min=13,max=13"`
+	FirstName string             `json:"firstName" bson:"firstName" binding:"required"`
+	LastName  string             `json:"lastName" bson:"lastName" binding:"required"`
+	Varified  bool               `json:"varified" bson:"varified"`
+	OTP       string             `json:"otp" bson:"otp"`
+	OTPExpiry time.Time          `json:"otpExpiry" bson:"otpExpiry"`
 }
 
 type Club struct {
