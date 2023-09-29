@@ -66,6 +66,10 @@ func generateHtmlContent(otp string) string {
                 padding: 15px;
                 margin: 30px;
 			}
+			.tagline {
+				color: #ffffff;
+				margin-top: 20px;
+			}
 
             .otp-image {
                 width: 250px;
@@ -84,10 +88,10 @@ func generateHtmlContent(otp string) string {
 		<div class="congratulations">Congratulations! You've successfully registered on Society Synergy.</div>
 	
 		<!-- OTP -->
-		<div class="otp">Your OTP is: <strong><span id="otp">%s</span></strong></div>
-		<button class="copy-button" onclick="
-            navigator.clipboard.writeText('%s');
-        ">Copy OTP</button>
+		<div class="otp">Your OTP is: <br> <strong><span id="otp">%s</span></strong></div>
+		<br>
+		<!-- Tagline -->
+		<div class="tagline">Clubbing Together Changing Forever:<br>Your VIP Pass to Campus Life</div>
 	
 		<!-- Link to your website -->
         <br><br>
@@ -99,5 +103,5 @@ func generateHtmlContent(otp string) string {
     </div>
 	</body>
 	</html>
-	`, otp, otp)
+	`, otp)
 }
