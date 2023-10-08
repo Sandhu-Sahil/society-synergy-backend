@@ -59,6 +59,6 @@ func (uc *UserController) Register(ctx *gin.Context) {
 	}
 	// ctx.JSON(http.StatusOK, gin.H{"message": "Registration success", "data": data})
 	ctx.Set("data", data)
-	ctx.Set("log", &log)
+	ctx.Set("log", log)
 	ctx.Next()
 }

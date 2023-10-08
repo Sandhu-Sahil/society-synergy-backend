@@ -7,13 +7,13 @@ import (
 )
 
 type Login struct {
-	UserName string `json:"userName" bson:"userName" binding:"required,alphanum"`
+	Email    string `json:"email" bson:"email" binding:"required,email"`
 	Password string `json:"password" bson:"password" binding:"required"`
 }
 
 type User struct {
 	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	UserName  string             `json:"userName" bson:"userName" binding:"required,alphanum"`
+	UserName  string             `json:"userName" bson:"userName" binding:"required"`
 	Email     string             `json:"email" bson:"email" binding:"required,email"`
 	Password  string             `json:"password" bson:"password" binding:"required"`
 	Role      string             `json:"role" bson:"role"` // student, head, admin

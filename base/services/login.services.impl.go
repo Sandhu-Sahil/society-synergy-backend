@@ -69,7 +69,7 @@ func (u *ServiceUserImpl) RegisterUser(user *models.User) (string, models.AuditL
 
 func (u *ServiceUserImpl) LoginUser(user *models.Login) (string, error) {
 	var userFound *models.User
-	query := bson.D{bson.E{Key: "userName", Value: user.UserName}}
+	query := bson.D{bson.E{Key: "email", Value: user.Email}}
 	err := u.usercollection.FindOne(u.ctx, query).Decode(&userFound)
 	if err != nil {
 		return "", err
@@ -80,7 +80,7 @@ func (u *ServiceUserImpl) LoginUser(user *models.Login) (string, error) {
 		return "", err
 	}
 
-	token, err := token.GenerateToken(userFound.ID.Hex(), user.UserName, userFound.Role)
+	token, err := token.GenerateToken(userFound.ID.Hex(), userFound.UserName, userFound.Role)
 	if err != nil {
 		return "", err
 	}
