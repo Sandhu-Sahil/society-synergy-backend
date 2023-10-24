@@ -57,8 +57,12 @@ func (uc *UserController) Register(ctx *gin.Context) {
 	data := map[string]string{
 		"token": token,
 	}
-	// ctx.JSON(http.StatusOK, gin.H{"message": "Registration success", "data": data})
-	ctx.Set("data", data)
-	ctx.Set("log", log)
-	ctx.Next()
+
+	_, err = services.RegisterLogS(&log)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"message": "Registration success", "data": data})
 }

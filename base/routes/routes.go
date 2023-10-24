@@ -13,7 +13,7 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 		userSimpleGroup := simpleGroup.Group("/user")
 		{
 			userSimpleGroup.POST("/login", rs.UserController.Login)
-			userSimpleGroup.POST("/register", rs.UserController.Register, rs.LogsController.RegisterLog)
+			userSimpleGroup.POST("/register", rs.UserController.Register)
 		}
 		testGroup := simpleGroup.Group("/test")
 		{

@@ -1,2 +1,2 @@
-dev: 
-	go run main.go
+run: 
+	bash shell.sh

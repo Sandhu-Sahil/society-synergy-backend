@@ -24,6 +24,8 @@ func NewServiceUser(usercollection *mongo.Collection, ctx context.Context) Servi
 }
 
 func NewServiceLogs(logcollection *mongo.Collection, ctx context.Context) ServiceLogs {
+	LogCollection = logcollection
+	Ctx = ctx
 	return &ServiceLogsImpl{
 		logcollection: logcollection,
 		ctx:           ctx,
