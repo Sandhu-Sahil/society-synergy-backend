@@ -64,5 +64,5 @@ func (uc *UserController) Register(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "Registration success", "data": data})
+	ctx.JSON(http.StatusOK, gin.H{"message": "Registration success, please verify OTP", "data": data})
 }
