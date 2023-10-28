@@ -90,3 +90,11 @@ type AuditLogs struct {
 	AfterEdit      interface{}        `json:"afterEdit" bson:"afterEdit"`
 	// Changes        string             `json:"changes" bson:"changes" binding:"required"`
 }
+
+type UserUpdate struct {
+	Otp       string `json:"otp"`
+	UserName  string `json:"userName"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	PhoneNo   string `json:"phoneNo"`
+}
