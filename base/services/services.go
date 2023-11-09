@@ -18,7 +18,7 @@ type ServiceUser interface {
 	UpdateUser(string, *models.UserUpdate) (models.AuditLogs, error)
 
 	// clubs
-	GetLeaderboardByDepartment(string) (models.Club, []models.ClubMember, error)
+	GetLeaderboardByDepartment(string) (models.Club, []models.ClubMember, models.User, error)
 	CreateDepartment(*models.CreateClub, string) (models.AuditLogs, error)
 
 	// club members

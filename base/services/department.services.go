@@ -9,30 +9,40 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (u *ServiceUserImpl) GetLeaderboardByDepartment(id string) (models.Club, []models.ClubMember, error) {
+func (u *ServiceUserImpl) GetLeaderboardByDepartment(id string) (models.Club, []models.ClubMember, models.User, error) {
 	var club models.Club
 	objectid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return models.Club{}, nil, err
+		return models.Club{}, nil, models.User{}, err
 	}
 
 	query := bson.D{bson.E{Key: "_id", Value: objectid}}
 	err = u.clubcollection.FindOne(u.ctx, query).Decode(&club)
 	if err != nil {
-		return models.Club{}, nil, err
+		return models.Club{}, nil, models.User{}, err
 	}
 
 	var members []models.ClubMember
 	query = bson.D{bson.E{Key: "clubID", Value: objectid}}
 	cursor, err := u.clubmembercollection.Find(u.ctx, query)
 	if err != nil {
-		return models.Club{}, nil, err
+		return models.Club{}, nil, models.User{}, err
 	}
 	if err = cursor.All(u.ctx, &members); err != nil {
-		return models.Club{}, nil, err
+		return models.Club{}, nil, models.User{}, err
 	}
 
-	return club, members, nil
+	var admin models.User
+	query = bson.D{bson.E{Key: "_id", Value: club.AdminID}}
+	err = u.usercollection.FindOne(u.ctx, query).Decode(&admin)
+	if err != nil {
+		return models.Club{}, nil, models.User{}, err
+	}
+	admin.Password = ""
+	admin.OTP = ""
+	admin.OTPExpiry = time.Time{}
+
+	return club, members, admin, nil
 }
 
 func (u *ServiceUserImpl) CreateDepartment(department *models.CreateClub, user_id string) (models.AuditLogs, error) {
