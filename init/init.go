@@ -28,8 +28,11 @@ var (
 	uc controllers.UserController
 	lc controllers.LogsController
 
-	userc *mongo.Collection
-	logc  *mongo.Collection
+	userc    *mongo.Collection
+	logc     *mongo.Collection
+	clubc    *mongo.Collection
+	memClubc *mongo.Collection
+	adminc   *mongo.Collection
 	// solc  *mongo.Collection
 	// quec  *mongo.Collection
 
@@ -62,10 +65,13 @@ func InitializeSetup() {
 
 	logc = mongoclient.Database("Society-Synergy").Collection("auditlogs")
 	userc = mongoclient.Database("Society-Synergy").Collection("users")
+	clubc = mongoclient.Database("Society-Synergy").Collection("clubs")
+	memClubc = mongoclient.Database("Society-Synergy").Collection("membersclubs")
+	adminc = mongoclient.Database("Society-Synergy").Collection("adminsclubs")
 	// solc = mongoclient.Database("Society-Synergy").Collection("solutions")
 	// quec = mongoclient.Database("Society-Synergy").Collection("questions")
 
-	us = services.NewServiceUser(userc, ctx)
+	us = services.NewServiceUser(userc, clubc, memClubc, adminc, ctx)
 	ls = services.NewServiceLogs(logc, ctx)
 
 	uc = controllers.NewUserController(us)

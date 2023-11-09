@@ -38,6 +38,19 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 			emailGroup.POST("/otpsend", rs.UserController.SendOtp)
 			emailGroup.POST("/otpverify", rs.UserController.VerifyOtp)
 		}
+		departmentGroup := jwtGroup.Group("/department")
+		{
+			departmentGroup.GET("/:id", rs.UserController.DepartmentLeaderboard)
+			departmentGroup.POST("/create", rs.UserController.CreateDepartment)
+		}
+		memberGroup := jwtGroup.Group("/member")
+		{
+			memberGroup.POST("/create", rs.UserController.CreateMember)
+		}
+		sandhuGroup := jwtGroup.Group("/sandhu")
+		{
+			sandhuGroup.POST("/createAdmin", rs.UserController.SandhuCreateAdmin)
+		}
 
 		// teamGroup := jwtGroup.Group("/team")
 		// {

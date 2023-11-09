@@ -29,18 +29,27 @@ type Club struct {
 	ID          primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name        string             `json:"name" bson:"name" binding:"required"`
 	Description string             `json:"description" bson:"description" binding:"required"`
-	AdminID     User               `json:"adminID" bson:"adminID" binding:"required"`
+	AdminID     primitive.ObjectID `json:"adminID" bson:"adminID" binding:"required"`
+	Instagram   string             `json:"instagram" bson:"instagram"`
+	LinkedIn    string             `json:"linkedIn" bson:"linkedIn"`
+	Github      string             `json:"github" bson:"github"`
+	Website     string             `json:"website" bson:"website"`
 }
 
 type ClubMember struct {
-	ID     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	ClubID Club               `json:"clubID" bson:"clubID" binding:"required"`
-	UserID User               `json:"userID" bson:"userID" binding:"required"`
+	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ClubID    primitive.ObjectID `json:"clubID" bson:"clubID" binding:"required"`
+	UserID    primitive.ObjectID `json:"userID" bson:"userID" binding:"required"`
+	Name      string             `json:"name" bson:"name" binding:"required"`
+	Instagram string             `json:"instagram" bson:"instagram" binding:"required"`
+	LinkedIn  string             `json:"linkedIn" bson:"linkedIn" binding:"required"`
+	Github    string             `json:"github" bson:"github" binding:"required"`
+	Role      string             `json:"role" bson:"role" binding:"required"`
 }
 
 type Event struct {
 	ID           primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	ClubID       Club               `json:"clubID" bson:"clubID" binding:"required"`
+	ClubID       primitive.ObjectID `json:"clubID" bson:"clubID" binding:"required"`
 	Name         string             `json:"name" bson:"name" binding:"required"`
 	Description  string             `json:"description" bson:"description" binding:"required"`
 	StartDate    string             `json:"startDate" bson:"startDate" binding:"required"`
@@ -52,8 +61,8 @@ type Event struct {
 
 type EventRSVP struct {
 	ID      primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	EventID Event              `json:"eventID" bson:"eventID" binding:"required"`
-	UserID  User               `json:"userID" bson:"userID" binding:"required"`
+	EventID primitive.ObjectID `json:"eventID" bson:"eventID" binding:"required"`
+	UserID  primitive.ObjectID `json:"userID" bson:"userID" binding:"required"`
 	Status  string             `json:"status" bson:"status" binding:"required"`
 }
 
@@ -66,7 +75,7 @@ type EventRSVP struct {
 
 type AdminID struct {
 	ID     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	UserID User               `json:"userID" bson:"userID" binding:"required"`
+	UserID primitive.ObjectID `json:"userID" bson:"userID" binding:"required"`
 }
 
 type Email struct {
@@ -88,7 +97,6 @@ type AuditLogs struct {
 	DocumentedByID string             `json:"documentID" bson:"documentID" binding:"required"`
 	BeforeEdit     interface{}        `json:"beforeEdit" bson:"beforeEdit"`
 	AfterEdit      interface{}        `json:"afterEdit" bson:"afterEdit"`
-	// Changes        string             `json:"changes" bson:"changes" binding:"required"`
 }
 
 type UserUpdate struct {
@@ -97,4 +105,27 @@ type UserUpdate struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	PhoneNo   string `json:"phoneNo"`
+}
+
+type CreateClub struct {
+	Name        string `json:"name" bson:"name" binding:"required"`
+	Description string `json:"description" bson:"description" binding:"required"`
+	AdminID     string `json:"adminID" bson:"adminID" binding:"required"`
+	Instagram   string `json:"instagram" bson:"instagram" binding:"required"`
+	LinkedIn    string `json:"linkedIn" bson:"linkedIn"`
+	Github      string `json:"github" bson:"github"`
+	Website     string `json:"website" bson:"website"`
+}
+
+type CreateAdmin struct {
+	UserID string `json:"userID" bson:"userID" binding:"required"`
+}
+
+type CreateMember struct {
+	ClubID    string `json:"clubID" bson:"clubID" binding:"required"`
+	UserID    string `json:"userID" bson:"userID" binding:"required"`
+	Instagram string `json:"instagram" bson:"instagram" binding:"required"`
+	LinkedIn  string `json:"linkedIn" bson:"linkedIn" binding:"required"`
+	Github    string `json:"github" bson:"github" binding:"required"`
+	Role      string `json:"role" bson:"role" binding:"required"`
 }

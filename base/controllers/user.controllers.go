@@ -53,7 +53,13 @@ func (uc *UserController) ChangePassword(ctx *gin.Context) {
 		return
 	}
 
-	err = uc.UserService.ChangePassword(user_id, password.Otp, password.NewPassword)
+	log, err := uc.UserService.ChangePassword(user_id, password.Otp, password.NewPassword)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	_, err = services.RegisterLogS(&log)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -75,7 +81,13 @@ func (uc *UserController) UpdateUser(ctx *gin.Context) {
 		return
 	}
 
-	err = uc.UserService.UpdateUser(user_id, &user)
+	log, err := uc.UserService.UpdateUser(user_id, &user)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	_, err = services.RegisterLogS(&log)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

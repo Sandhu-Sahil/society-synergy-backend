@@ -7,8 +7,11 @@ import (
 )
 
 type ServiceUserImpl struct {
-	usercollection *mongo.Collection
-	ctx            context.Context
+	usercollection       *mongo.Collection
+	clubcollection       *mongo.Collection
+	clubmembercollection *mongo.Collection
+	clubadmincollection  *mongo.Collection
+	ctx                  context.Context
 }
 
 type ServiceLogsImpl struct {
@@ -16,10 +19,13 @@ type ServiceLogsImpl struct {
 	ctx           context.Context
 }
 
-func NewServiceUser(usercollection *mongo.Collection, ctx context.Context) ServiceUser {
+func NewServiceUser(usercollection *mongo.Collection, clubcollection *mongo.Collection, clubmembercollection *mongo.Collection, clubadmincollection *mongo.Collection, ctx context.Context) ServiceUser {
 	return &ServiceUserImpl{
-		usercollection: usercollection,
-		ctx:            ctx,
+		usercollection:       usercollection,
+		clubcollection:       clubcollection,
+		clubmembercollection: clubmembercollection,
+		clubadmincollection:  clubadmincollection,
+		ctx:                  ctx,
 	}
 }
 
