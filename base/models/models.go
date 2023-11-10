@@ -30,10 +30,11 @@ type Club struct {
 	Name        string             `json:"name" bson:"name" binding:"required"`
 	Description string             `json:"description" bson:"description" binding:"required"`
 	AdminID     primitive.ObjectID `json:"adminID" bson:"adminID" binding:"required"`
-	Instagram   string             `json:"instagram" bson:"instagram"`
-	LinkedIn    string             `json:"linkedIn" bson:"linkedIn"`
+	Instagram   string             `json:"instagram" bson:"instagram" binding:"required"`
+	LinkedIn    string             `json:"linkedIn" bson:"linkedIn" binding:"required"`
 	Github      string             `json:"github" bson:"github"`
 	Website     string             `json:"website" bson:"website"`
+	LogoUrl     string             `json:"logoUrl" bson:"logoUrl" binding:"required"`
 }
 
 type ClubMember struct {
@@ -112,9 +113,10 @@ type CreateClub struct {
 	Description string `json:"description" bson:"description" binding:"required"`
 	AdminID     string `json:"adminID" bson:"adminID" binding:"required"`
 	Instagram   string `json:"instagram" bson:"instagram" binding:"required"`
-	LinkedIn    string `json:"linkedIn" bson:"linkedIn"`
+	LinkedIn    string `json:"linkedIn" bson:"linkedIn" binding:"required"`
 	Github      string `json:"github" bson:"github"`
 	Website     string `json:"website" bson:"website"`
+	LogoUrl     string `json:"logoUrl" bson:"logoUrl" binding:"required"`
 }
 
 type CreateAdmin struct {

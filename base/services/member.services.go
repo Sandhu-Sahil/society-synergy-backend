@@ -72,11 +72,14 @@ func (u *ServiceUserImpl) CreateMember(member *models.CreateMember, user_id stri
 	}
 
 	// update user role
-	update := bson.D{bson.E{Key: "$set", Value: bson.D{bson.E{Key: "role", Value: "HEAD"}}}}
-	query = bson.D{bson.E{Key: "_id", Value: objectid2}}
-	_, err = u.usercollection.UpdateOne(u.ctx, query, update)
-	if err != nil {
-		return models.AuditLogs{}, err
+	// check if user is admin of any club then skip this step
+	if user.Role == "STUDENT" {
+		update := bson.D{bson.E{Key: "$set", Value: bson.D{bson.E{Key: "role", Value: "HEAD"}}}}
+		query = bson.D{bson.E{Key: "_id", Value: objectid2}}
+		_, err = u.usercollection.UpdateOne(u.ctx, query, update)
+		if err != nil {
+			return models.AuditLogs{}, err
+		}
 	}
 
 	// create log

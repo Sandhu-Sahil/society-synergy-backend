@@ -32,8 +32,15 @@ func (u *ServiceUserImpl) GetLeaderboardByDepartment(id string) (models.Club, []
 		return models.Club{}, nil, models.User{}, err
 	}
 
-	var admin models.User
+	var adminid models.AdminID
 	query = bson.D{bson.E{Key: "_id", Value: club.AdminID}}
+	err = u.clubadmincollection.FindOne(u.ctx, query).Decode(&adminid)
+	if err != nil {
+		return models.Club{}, nil, models.User{}, err
+	}
+
+	var admin models.User
+	query = bson.D{bson.E{Key: "_id", Value: adminid.UserID}}
 	err = u.usercollection.FindOne(u.ctx, query).Decode(&admin)
 	if err != nil {
 		return models.Club{}, nil, models.User{}, err
@@ -41,6 +48,7 @@ func (u *ServiceUserImpl) GetLeaderboardByDepartment(id string) (models.Club, []
 	admin.Password = ""
 	admin.OTP = ""
 	admin.OTPExpiry = time.Time{}
+	admin.PhoneNo = ""
 
 	return club, members, admin, nil
 }
@@ -68,8 +76,9 @@ func (u *ServiceUserImpl) CreateDepartment(department *models.CreateClub, user_i
 	}
 
 	// check if admin exists
+	var admin models.AdminID
 	query = bson.D{bson.E{Key: "_id", Value: club.AdminID}}
-	err = u.clubadmincollection.FindOne(u.ctx, query).Decode(&user)
+	err = u.clubadmincollection.FindOne(u.ctx, query).Decode(&admin)
 	if err != nil {
 		return models.AuditLogs{}, err
 	}
@@ -86,6 +95,7 @@ func (u *ServiceUserImpl) CreateDepartment(department *models.CreateClub, user_i
 	club.Instagram = department.Instagram
 	club.LinkedIn = department.LinkedIn
 	club.Website = department.Website
+	club.LogoUrl = department.LogoUrl
 
 	_, err = u.clubcollection.InsertOne(u.ctx, club)
 	if err != nil {

@@ -21,6 +21,14 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 		{
 			testGroup.GET("/ping", rs.UserController.Ping)
 		}
+		departmentGroup := simpleGroup.Group("/department")
+		{
+			departmentGroup.GET("/:id", rs.UserController.DepartmentLeaderboard)
+		}
+		homeGroup := simpleGroup.Group("/home")
+		{
+			homeGroup.GET("/leaderboard", rs.UserController.HomeLeaderboard)
+		}
 	}
 
 	jwtGroup := rg.Group("v2") //with jwt headers
@@ -40,7 +48,7 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 		}
 		departmentGroup := jwtGroup.Group("/department")
 		{
-			departmentGroup.GET("/:id", rs.UserController.DepartmentLeaderboard)
+			// departmentGroup.GET("/:id", rs.UserController.DepartmentLeaderboard)
 			departmentGroup.POST("/create", rs.UserController.CreateDepartment)
 		}
 		memberGroup := jwtGroup.Group("/member")

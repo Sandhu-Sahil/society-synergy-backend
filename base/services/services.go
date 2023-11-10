@@ -26,6 +26,9 @@ type ServiceUser interface {
 
 	// Sandhu
 	SandhuCreateAdmin(*models.CreateAdmin, string) (models.AuditLogs, error)
+
+	// home
+	GetLeaderboardByHome() ([]models.Club, error)
 }
 
 type ServiceLogs interface {
