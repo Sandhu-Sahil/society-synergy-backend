@@ -95,7 +95,7 @@ func generateHtmlContent(otp string) string {
 	
 		<!-- Link to your website -->
         <br><br>
-		<a class="website-link" href="#">Visit Our Website</a>
+		<a class="website-link" href="https://society-synergy.one/">Visit Our Website</a>
         </div>
 	
 		<!-- Thank you message -->

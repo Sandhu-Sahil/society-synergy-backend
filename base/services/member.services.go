@@ -72,7 +72,7 @@ func (u *ServiceUserImpl) CreateMember(member *models.CreateMember, user_id stri
 	}
 
 	// update user role
-	// check if user is admin of any club then skip this step
+	// check if user is admin and head of any club then skip this step
 	if user.Role == "STUDENT" {
 		update := bson.D{bson.E{Key: "$set", Value: bson.D{bson.E{Key: "role", Value: "HEAD"}}}}
 		query = bson.D{bson.E{Key: "_id", Value: objectid2}}

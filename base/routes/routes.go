@@ -55,6 +55,11 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 		{
 			memberGroup.POST("/create", rs.UserController.CreateMember)
 		}
+		eventGroup := jwtGroup.Group("/event")
+		{
+			eventGroup.POST("/create", rs.UserController.CreateEvent)
+			emailGroup.POST("/addrsvp", rs.UserController.AddRsvp)
+		}
 		sandhuGroup := jwtGroup.Group("/sandhu")
 		{
 			sandhuGroup.POST("/createAdmin", rs.UserController.SandhuCreateAdmin)

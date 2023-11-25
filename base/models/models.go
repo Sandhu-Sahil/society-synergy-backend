@@ -58,13 +58,14 @@ type Event struct {
 	EventTime    string             `json:"eventTime" bson:"eventTime" binding:"required"`
 	Location     string             `json:"location" bson:"location" binding:"required"`
 	RSVPDeadline string             `json:"rsvpDeadline" bson:"rsvpDeadline" binding:"required"`
+	PosterUrl    string             `json:"posterUrl" bson:"posterUrl"`
 }
 
 type EventRSVP struct {
-	ID      primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	EventID primitive.ObjectID `json:"eventID" bson:"eventID" binding:"required"`
-	UserID  primitive.ObjectID `json:"userID" bson:"userID" binding:"required"`
-	Status  string             `json:"status" bson:"status" binding:"required"`
+	ID           primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	EventID      primitive.ObjectID `json:"eventID" bson:"eventID" binding:"required"`
+	EventDetails Event              `json:"eventDetails" bson:"eventDetails" binding:"required"`
+	UserID       primitive.ObjectID `json:"userID" bson:"userID" binding:"required"`
 }
 
 // type EventRSVPCount struct {
@@ -130,4 +131,20 @@ type CreateMember struct {
 	LinkedIn  string `json:"linkedIn" bson:"linkedIn" binding:"required"`
 	Github    string `json:"github" bson:"github" binding:"required"`
 	Role      string `json:"role" bson:"role" binding:"required"`
+}
+
+type EventRSVPCreate struct {
+	EventID string `json:"eventID" bson:"eventID" binding:"required"`
+}
+
+type EventCreate struct {
+	ClubID       string `json:"clubID" bson:"clubID" binding:"required"`
+	Name         string `json:"name" bson:"name" binding:"required"`
+	Description  string `json:"description" bson:"description" binding:"required"`
+	StartDate    string `json:"startDate" bson:"startDate" binding:"required"`
+	EndDate      string `json:"endDate" bson:"endDate" binding:"required"`
+	EventTime    string `json:"eventTime" bson:"eventTime" binding:"required"`
+	Location     string `json:"location" bson:"location" binding:"required"`
+	RSVPDeadline string `json:"rsvpDeadline" bson:"rsvpDeadline" binding:"required"`
+	PosterUrl    string `json:"posterUrl" bson:"posterUrl"`
 }

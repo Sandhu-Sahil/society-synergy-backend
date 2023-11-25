@@ -11,6 +11,8 @@ type ServiceUserImpl struct {
 	clubcollection       *mongo.Collection
 	clubmembercollection *mongo.Collection
 	clubadmincollection  *mongo.Collection
+	eventcollection      *mongo.Collection
+	eventrsvpcollection  *mongo.Collection
 	ctx                  context.Context
 }
 
@@ -19,12 +21,14 @@ type ServiceLogsImpl struct {
 	ctx           context.Context
 }
 
-func NewServiceUser(usercollection *mongo.Collection, clubcollection *mongo.Collection, clubmembercollection *mongo.Collection, clubadmincollection *mongo.Collection, ctx context.Context) ServiceUser {
+func NewServiceUser(usercollection *mongo.Collection, clubcollection *mongo.Collection, clubmembercollection *mongo.Collection, clubadmincollection *mongo.Collection, eventcollection *mongo.Collection, eventrsvpcollection *mongo.Collection, ctx context.Context) ServiceUser {
 	return &ServiceUserImpl{
 		usercollection:       usercollection,
 		clubcollection:       clubcollection,
 		clubmembercollection: clubmembercollection,
 		clubadmincollection:  clubadmincollection,
+		eventcollection:      eventcollection,
+		eventrsvpcollection:  eventrsvpcollection,
 		ctx:                  ctx,
 	}
 }

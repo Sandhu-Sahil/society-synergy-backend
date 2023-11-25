@@ -29,6 +29,10 @@ type ServiceUser interface {
 
 	// home
 	GetLeaderboardByHome() ([]models.Club, error)
+
+	// event
+	CreateEvent(*models.EventCreate, string) (models.Event, error)
+	AddRsvp(*models.EventRSVPCreate, string) (models.EventRSVP, error)
 }
 
 type ServiceLogs interface {
