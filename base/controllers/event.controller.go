@@ -42,10 +42,6 @@ func (us *UserController) CreateEvent(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "must provide all fields, rsvpDeadline is missing"})
 		return
 	}
-	if event.PosterUrl == "" {
-		c.JSON(400, gin.H{"error": "must provide all fields, posterUrl is missing"})
-		return
-	}
 
 	user_id, _, err := token.ExtractTokenID(c)
 	if err != nil {

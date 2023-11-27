@@ -7,14 +7,15 @@ import (
 )
 
 func (uc *UserController) HomeLeaderboard(c *gin.Context) {
-	clubs, err := uc.UserService.GetLeaderboardByHome()
+	clubs, events, err := uc.UserService.GetLeaderboardByHome()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	data := map[string]interface{}{
-		"clubs": clubs,
+		"clubs":  clubs,
+		"events": events,
 	}
 	c.JSON(http.StatusOK, data)
 }

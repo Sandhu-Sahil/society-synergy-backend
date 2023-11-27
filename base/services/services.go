@@ -28,7 +28,7 @@ type ServiceUser interface {
 	SandhuCreateAdmin(*models.CreateAdmin, string) (models.AuditLogs, error)
 
 	// home
-	GetLeaderboardByHome() ([]models.Club, error)
+	GetLeaderboardByHome() ([]models.Club, []models.Event, error)
 
 	// event
 	CreateEvent(*models.EventCreate, string) (models.Event, error)
