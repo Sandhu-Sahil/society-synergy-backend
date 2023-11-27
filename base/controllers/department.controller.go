@@ -11,7 +11,7 @@ import (
 
 func (uc *UserController) DepartmentLeaderboard(c *gin.Context) {
 	id := c.Param("id")
-	club, members, admin, err := uc.UserService.GetLeaderboardByDepartment(id)
+	club, members, admin, events, err := uc.UserService.GetLeaderboardByDepartment(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -21,6 +21,7 @@ func (uc *UserController) DepartmentLeaderboard(c *gin.Context) {
 		"club":    club,
 		"members": members,
 		"admin":   admin,
+		"events":  events,
 	}
 	c.JSON(http.StatusOK, data)
 }

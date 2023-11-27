@@ -163,3 +163,26 @@ func (u *ServiceUserImpl) AddRsvp(rsvp *models.EventRSVPCreate, user_id string) 
 
 	return neweventrsvp, nil
 }
+
+func (u *ServiceUserImpl) GetLeaderboardByEvent(id string) (models.Club, models.Event, error) {
+	objectid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return models.Club{}, models.Event{}, err
+	}
+
+	var event models.Event
+	query := bson.D{bson.E{Key: "_id", Value: objectid}}
+	err = u.eventcollection.FindOne(u.ctx, query).Decode(&event)
+	if err != nil {
+		return models.Club{}, models.Event{}, err
+	}
+
+	var club models.Club
+	query = bson.D{bson.E{Key: "_id", Value: event.ClubID}}
+	err = u.clubcollection.FindOne(u.ctx, query).Decode(&club)
+	if err != nil {
+		return models.Club{}, models.Event{}, err
+	}
+
+	return club, event, nil
+}

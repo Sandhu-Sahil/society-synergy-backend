@@ -83,3 +83,18 @@ func (us *UserController) AddRsvp(c *gin.Context) {
 
 	c.JSON(200, gin.H{"message": "Rsvp added successfully", "data": newevent})
 }
+
+func (us *UserController) EventLeaderboard(c *gin.Context) {
+	id := c.Param("id")
+	club, event, err := us.UserService.GetLeaderboardByEvent(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	data := map[string]interface{}{
+		"event": event,
+		"club":  club,
+	}
+	c.JSON(http.StatusOK, data)
+}

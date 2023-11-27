@@ -25,6 +25,10 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 		{
 			departmentGroup.GET("/:id", rs.UserController.DepartmentLeaderboard)
 		}
+		eventGroup := simpleGroup.Group("/event")
+		{
+			eventGroup.GET("/:id", rs.UserController.EventLeaderboard)
+		}
 		homeGroup := simpleGroup.Group("/home")
 		{
 			homeGroup.GET("/leaderboard", rs.UserController.HomeLeaderboard)
