@@ -19,7 +19,7 @@ type authCustomClaims struct {
 
 func GenerateToken(user_id string, user_name string, user_role string) (string, error) {
 
-	token_lifespan, err := strconv.Atoi("5")
+	token_lifespan, err := strconv.Atoi("24")
 	issuer := "Sahilsher-Singh-Sandhu"
 
 	if err != nil {

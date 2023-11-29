@@ -62,7 +62,7 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 		eventGroup := jwtGroup.Group("/event")
 		{
 			eventGroup.POST("/create", rs.UserController.CreateEvent)
-			emailGroup.POST("/addrsvp", rs.UserController.AddRsvp)
+			eventGroup.POST("/addrsvp", rs.UserController.AddRsvp)
 		}
 		sandhuGroup := jwtGroup.Group("/sandhu")
 		{

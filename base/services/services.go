@@ -16,6 +16,7 @@ type ServiceUser interface {
 	VerifyOTPEmail(string, string) (string, error)
 	ChangePassword(string, string, string) (models.AuditLogs, error)
 	UpdateUser(string, *models.UserUpdate) (models.AuditLogs, error)
+	GetUserRsvpEvents(string) ([]models.EventRSVP, error)
 
 	// clubs
 	GetLeaderboardByDepartment(string) (models.Club, []models.ClubMember, models.User, []models.Event, error)

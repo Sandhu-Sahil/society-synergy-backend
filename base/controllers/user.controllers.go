@@ -28,7 +28,18 @@ func (uc *UserController) GetUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "success", "data": u})
+	events, err := uc.UserService.GetUserRsvpEvents(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	data := map[string]interface{}{
+		"user":   u,
+		"events": events,
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"message": "success", "data": data})
 }
 
 func (uc *UserController) ChangePassword(ctx *gin.Context) {

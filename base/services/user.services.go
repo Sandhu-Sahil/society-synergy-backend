@@ -7,6 +7,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -26,6 +27,32 @@ func (u *ServiceUserImpl) GetUserByID(id string) (*models.User, error) {
 	userFound.Password = "**PROTECTED**"
 	userFound.OTP = "**PROTECTED**"
 	return userFound, nil
+}
+
+func (u *ServiceUserImpl) GetUserRsvpEvents(id string) ([]models.EventRSVP, error) {
+	objectid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return []models.EventRSVP{}, err
+	}
+
+	query := bson.D{bson.E{Key: "userID", Value: objectid}}
+	var events []models.EventRSVP
+	options := options.Find()
+	options.SetSort(bson.D{{"eventDetails.startDate", -1}})
+	options.SetLimit(15)
+	cur, err := u.eventrsvpcollection.Find(u.ctx, query)
+	if err != nil {
+		return []models.EventRSVP{}, err
+	}
+	for cur.Next(u.ctx) {
+		var event models.EventRSVP
+		err := cur.Decode(&event)
+		if err != nil {
+			return []models.EventRSVP{}, err
+		}
+		events = append(events, event)
+	}
+	return events, nil
 }
 
 func (u *ServiceUserImpl) ChangePassword(user_id string, otp string, newPassword string) (models.AuditLogs, error) {
