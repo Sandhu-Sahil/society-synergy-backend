@@ -16,6 +16,7 @@ func (rs *RouterService) RegisterRoutes(rg *gin.RouterGroup) {
 			userSimpleGroup.POST("/register", rs.UserController.Register)
 			userSimpleGroup.POST("/otpsendemail", rs.UserController.EmailSendOtp)
 			userSimpleGroup.POST("/otpverifyemail", rs.UserController.VerifyOtpEmail)
+			userSimpleGroup.POST("/adminlogin", rs.UserController.AdminLogin)
 		}
 		testGroup := simpleGroup.Group("/test")
 		{

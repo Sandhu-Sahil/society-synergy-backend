@@ -35,6 +35,9 @@ type ServiceUser interface {
 	CreateEvent(*models.EventCreate, string) (models.Event, error)
 	AddRsvp(*models.EventRSVPCreate, string) (models.EventRSVP, error)
 	GetLeaderboardByEvent(string) (models.Club, models.Event, error)
+
+	// admin
+	AdminLogin(*models.Login) (string, error)
 }
 
 type ServiceLogs interface {
