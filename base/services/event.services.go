@@ -97,10 +97,10 @@ func urlValidator(url string) error {
 	if len(url) < 4 {
 		return fmt.Errorf("invalid url")
 	}
-	if url[len(url)-4:] == ".png" || url[len(url)-4:] == ".jpg" || url[len(url)-4:] == ".gif" || url[len(url)-4:] == ".webp" {
+	if url[len(url)-4:] == ".png" || url[len(url)-4:] == ".jpg" || url[len(url)-4:] == ".gif" {
 		return nil
 	}
-	if url[len(url)-5:] == ".jpeg" {
+	if url[len(url)-5:] == ".jpeg" || url[len(url)-4:] == ".webp" {
 		return nil
 	}
 	return fmt.Errorf("invalid url")

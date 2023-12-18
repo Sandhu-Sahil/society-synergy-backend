@@ -104,6 +104,11 @@ func (u *ServiceUserImpl) CreateDepartment(department *models.CreateClub, user_i
 		return models.AuditLogs{}, fmt.Errorf("department already exists")
 	}
 
+	// check if poster url is valid
+	if err := urlValidator(department.LogoUrl); err != nil {
+		return models.AuditLogs{}, err
+	}
+
 	club.Description = department.Description
 	club.Name = department.Name
 	club.Github = department.Github
